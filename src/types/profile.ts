@@ -68,9 +68,14 @@ export interface ProjectItem {
 }
 
 export interface EnterpriseTrackItem {
+  id: string
+  badge: string
   title: string
+  subtitle: string
   detail: string
+  highlightList: string[]
   tagList: string[]
+  wide?: boolean
 }
 
 export interface PrincipleItem {

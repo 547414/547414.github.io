@@ -230,47 +230,73 @@ function countByCategory(categoryKey: ProjectCategoryKey): number {
       </div>
 
       <!-- 脱敏企业级工程沉淀概览 -->
-      <div class="surface-card mt-10 rounded-2xl p-6 sm:p-7">
-        <div class="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
-          <div class="flex items-center gap-2.5">
-            <Server class="h-4 w-4 text-[var(--accent-cyan)]" />
-            <h3 class="text-base font-bold text-[var(--text-primary)]">
-              更多生产级工程沉淀（脱敏概览）
-            </h3>
+      <div class="surface-card mt-10 rounded-2xl p-6 sm:p-8">
+        <div class="flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
+          <div>
+            <div class="flex items-center gap-2.5">
+              <Server class="h-4 w-4 text-[var(--accent-cyan)]" />
+              <h3 class="text-lg font-bold text-[var(--text-primary)]">
+                更多生产级工程沉淀（脱敏概览）
+              </h3>
+            </div>
+            <p class="mt-1.5 text-xs leading-relaxed text-[var(--text-secondary)] sm:text-sm">
+              以下为长期实战中从 0 到 1 主导架构与落地的企业级系统，已按公开边界脱敏，仅呈现工程架构与核心能力。
+            </p>
           </div>
           <a
             :href="websiteUrl"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-1 font-mono-tech text-xs text-[var(--accent-cyan)] hover:underline"
+            class="inline-flex shrink-0 items-center gap-1 font-mono-tech text-xs text-[var(--accent-cyan)] hover:underline"
           >
             <span>更多公开项目见 crysu.com</span>
             <ArrowUpRight class="h-3.5 w-3.5" />
           </a>
         </div>
 
-        <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <div
+        <div class="mt-6 grid gap-4 md:grid-cols-2">
+          <article
             v-for="track in enterpriseTrackList"
-            :key="track.title"
-            class="rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-4"
+            :key="track.id"
+            class="flex flex-col justify-between rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-5 transition-colors hover:border-[var(--border-strong)]"
+            :class="track.wide ? 'md:col-span-2' : ''"
           >
-            <div class="text-sm font-semibold text-[var(--text-primary)]">
-              {{ track.title }}
+            <div>
+              <div class="font-mono-tech text-[11px] font-semibold tracking-[0.18em] text-[var(--accent-cyan)]">
+                {{ track.badge }}
+              </div>
+              <h4 class="mt-2 text-base font-bold text-[var(--text-primary)] sm:text-lg">
+                {{ track.title }}
+              </h4>
+              <p class="mt-1 text-xs font-medium text-[var(--text-muted)] sm:text-[13px]">
+                {{ track.subtitle }}
+              </p>
+              <p class="mt-3 text-xs leading-6 text-[var(--text-secondary)] sm:text-sm sm:leading-7">
+                {{ track.detail }}
+              </p>
+
+              <ul class="mt-3.5 space-y-1.5 text-xs leading-6 text-[var(--text-secondary)]">
+                <li
+                  v-for="point in track.highlightList"
+                  :key="point"
+                  class="flex items-start gap-2"
+                >
+                  <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent-cyan)]" />
+                  <span>{{ point }}</span>
+                </li>
+              </ul>
             </div>
-            <p class="mt-1.5 text-xs leading-6 text-[var(--text-secondary)]">
-              {{ track.detail }}
-            </p>
-            <div class="mt-3 flex flex-wrap gap-1.5">
+
+            <div class="mt-5 flex flex-wrap gap-1.5 border-t border-[var(--border-subtle)] pt-3.5">
               <span
                 v-for="tag in track.tagList"
                 :key="tag"
-                class="rounded bg-[var(--accent-cyan-soft)] px-2 py-0.5 font-mono-tech text-[10px] text-[var(--accent-cyan)]"
+                class="rounded-md bg-[var(--accent-cyan-soft)] px-2.5 py-0.5 font-mono-tech text-[11px] text-[var(--accent-cyan)]"
               >
                 {{ tag }}
               </span>
             </div>
-          </div>
+          </article>
         </div>
       </div>
     </div>

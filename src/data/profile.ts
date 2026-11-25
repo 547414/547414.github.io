@@ -74,7 +74,7 @@ export const PROFILE_DATA: ProfileData = {
       lineList: [
         { prefix: '$', value: 'load CLAUDE.md + AGENTS.md + code_config', tone: 'muted' },
         { prefix: '✓', value: 'Claude Code / Codex / Antigravity 接入规范上下文', tone: 'success' },
-        { prefix: '✓', value: 'MCP 工具网关 + Agent Skills 权限策略就绪', tone: 'accent' },
+        { prefix: '✓', value: 'Agent Gate 工具网关 + Agent Skills 权限策略就绪', tone: 'accent' },
         { prefix: '⚡', value: 'Phone AI Audit 已待命：离开工位，手机锁屏一键审批上线', tone: 'amber' }
       ]
     }
@@ -94,8 +94,8 @@ export const PROFILE_DATA: ProfileData = {
       eyebrow: '02 · AI-NATIVE',
       title: '不止用 AI 写代码，更给 AI 立规矩、造武器',
       summary:
-        '把工程规范写进 CLAUDE.md / AGENTS.md 只是起点。为了让人机协同真正可控、趁手，我亲手做了手机远程审批与终端遥控工具 Phone AI Audit，也落地过企业级 AI 工具网关、智能问数 MCP、Agent Skills 体系及自建 TTS / ASR 语音推理接口。',
-      highlightList: ['远程遥控三大 AI Agent', 'MCP & 工具网关', '语音推理自建'],
+        '把工程规范写进 CLAUDE.md / AGENTS.md 只是起点。为了让人机协同真正可控、趁手，我亲手做了手机远程审批与终端遥控工具 Phone AI Audit，也落地过企业级 AI 工具网关、纯本地离线 AI 知识网盘、Agent Skills 体系及自建 TTS / ASR 语音推理接口。',
+      highlightList: ['远程遥控三大 AI Agent', 'AI 工具网关 & 审计', '离线 AI 知识资产化'],
       accent: 'amber'
     },
     {
@@ -133,16 +133,16 @@ export const PROFILE_DATA: ProfileData = {
       id: 'ai',
       badge: 'AI & AGENTS',
       title: 'AI 与 Agent 工程',
-      subtitle: '围绕大模型应用、多 Agent 协同规范、工具网关协议与端到端语音推理构建生产闭环。',
+      subtitle: '围绕大模型应用、多 Agent 协同规范、工具网关鉴权与端到端离线推理构建生产闭环。',
       skillList: [
         { name: 'Claude Code / Codex / AGY', core: true },
-        { name: 'MCP (Streamable HTTP)', core: true },
+        { name: 'Agent Gate 工具网关', core: true },
         { name: 'Agent Skills', core: true },
         { name: 'LLM-SDK / LangGraph', core: true },
         { name: 'ChatTTS (HLS 流式)' },
         { name: 'Faster-Whisper ASR' },
-        { name: 'OCR 智能解析' },
-        { name: 'SQLGlot 安全校验' }
+        { name: 'ONNX 视觉 / 人脸聚类' },
+        { name: 'OCR 智能解析' }
       ]
     },
     {
@@ -223,7 +223,7 @@ export const PROFILE_DATA: ProfileData = {
       subtitle: '个人题库管理、分享与高效练习微信小程序',
       category: 'indie-product',
       categoryLabel: '独立产品与小游戏',
-      statusBadge: '开源 · 23 ★',
+      statusBadge: '微信小程序',
       summary:
         '围绕真实备考与记忆场景打磨的自制题库小程序。支持五种题型、LaTeX 数学公式渲染、Excel/ZIP 批量导入导出、分享码流转、顺序/随机/整套模拟练习与自动错题本复盘。',
       highlightList: [
@@ -232,8 +232,7 @@ export const PROFILE_DATA: ProfileData = {
       ],
       tagList: ['微信小程序', 'FastAPI', 'Vue 3', 'KaTeX', 'Celery'],
       linkList: [
-        { label: '产品介绍页', url: 'https://crysu.com:5556/intro', primary: true },
-        { label: 'GitHub', url: 'https://github.com/547414/tkwxxcx' }
+        { label: '产品介绍页', url: 'https://crysu.com:5556/intro', primary: true }
       ]
     },
     {
@@ -312,24 +311,71 @@ export const PROFILE_DATA: ProfileData = {
   ],
   enterpriseTrackList: [
     {
-      title: '企业级 AI 工具网关',
-      detail: 'Go CLI 终端接入 + 身份鉴权 + 工具授权、数据策略与全链路调用审计',
-      tagList: ['Go CLI', 'FastAPI', '权限审计']
+      id: 'enterprise-drive',
+      badge: 'STORAGE & LOCAL AI',
+      title: '企业网盘与 AI 知识资产平台',
+      subtitle: 'RustFS 私有存储 × 纯本机 CPU 离线 AI 内容理解与人物识别',
+      detail:
+        '面向组织协同的多端私有网盘（Web PC + Mobile H5 + FastAPI），在完善团队/个人空间、继承式目录权限与受控文件流转的基础上，自研零云端依赖的本地 AI 知识资产化引擎，让沉淀的文件、音视频与影像素材真正可搜索、可问答、可被智能体合规调用。',
+      highlightList: [
+        '全量文档自动解析索引与音视频默认转写，检索阶段不调用云端大模型，兼顾速度与数据安全',
+        '内置 YuNet + SFace ONNX 本地人物识别与视频帧人脸聚类，LFW 基准测试 0 误认、95.3% 召回',
+        '权限边界细化至内容片段查看与分段读取，并向企业 AI 工具网关开放受控知识检索能力'
+      ],
+      tagList: ['RustFS', 'FastAPI', 'Vue 3', 'Vant', 'ONNX 本地推理', '音视频转写'],
+      wide: true
     },
     {
-      title: '智能问数 MCP 平台',
-      detail: '基于 Streamable HTTP 的企业级 MCP 服务，SQLGlot 执行前校验并注入角色数据范围',
-      tagList: ['MCP', 'SQLGlot', 'Doris']
+      id: 'agent-gate',
+      badge: 'AI GATEWAY',
+      title: '企业级 AI 工具网关（Agent Gate）',
+      subtitle: '人与智能体共用一条可鉴权、可审计的统一工具调用链',
+      detail:
+        '解决 AI Agent 调用企业内部与第三方工具时的身份隔离、权限失控与密钥泄露痛点。终端侧提供跨平台零依赖 Go 单文件 CLI，平台侧统一负责设备授权、细粒度能力策略、能力目录定时同步与全链路调用审计。',
+      highlightList: [
+        'Go CLI 支持浏览器一键「登录认证 + 设备确认」双阶段授权，彻底告别手工复制 Token',
+        '所有工具调用严格绑定真实本人身份与数据范围策略，全程留痕审计并支持能力目录自动同步'
+      ],
+      tagList: ['Go CLI', 'FastAPI', '设备授权流', '权限策略', '调用审计']
     },
     {
-      title: '跨平台无线投屏系统',
-      detail: 'Go 核心协议栈 + macOS AppKit 签名公证 + Windows WPF + Android TV 接收端',
-      tagList: ['Go', 'AppKit', 'WPF', 'Android TV']
+      id: 'work-quantification',
+      badge: 'WORKFLOW & COLLAB',
+      title: '工作量化与研发协作平台',
+      subtitle: '集项目、工单、自定义工作流、Wiki 与多维量化统计于一体',
+      detail:
+        '历经近 300 次持续迭代打磨的企业级事务与研发协作中台。围绕项目、团队、工单与流程节点形成完整闭环，同时沉淀组织知识库与自动化数据看板，让跨部门协同过程透明、工作产出可量化。',
+      highlightList: [
+        '支持动态扩展字段工单、可视化节点表单工作流、指派轨迹追踪、附件评论与站内消息中心',
+        '内置部门/个人/项目多维度统计分析、定时周报催收卡片推送，以及支持历史版本与右侧 TOC 的 Wiki 知识库'
+      ],
+      tagList: ['FastAPI', 'Vue 3', '自定义工作流', 'APScheduler', 'ECharts', 'Wiki']
     },
     {
-      title: 'AI 科研 & 多端企业中台',
-      detail: 'mRNA 序列优化 Web UI、RustFS 私有网盘、OCR 票据解析与多系统集成自动化',
-      tagList: ['生物计算 UI', 'RustFS', 'OCR']
+      id: 'screen-casting',
+      badge: 'CROSS-PLATFORM & EMBEDDED',
+      title: '跨平台无线投屏与嵌入式发现系统',
+      subtitle: 'Go 核心协议栈 × 签名公证桌面原生客户端 × 嵌入式硬件代理',
+      detail:
+        '打通从底层硬件发现到桌面/大屏音视频投屏的全链路自研方案。桌面端覆盖经 Apple 签名公证（Notarized）的 macOS AppKit 与 Windows 原生 WPF 客户端，并配套首次安装向导、Android TV 接收端与版本分发服务。',
+      highlightList: [
+        '基于 Go 构建核心投屏控制引擎与自定义协议，兼顾低延迟体验与跨平台设备配对凭据留存',
+        '深入 AliOS-Things / MicroPython 开发板实现 mDNS 发现代理与生产签名心跳，定位并修补上游 C 层 GC 线程根扫描 BusFault 缺陷'
+      ],
+      tagList: ['Go', 'macOS AppKit', 'Windows WPF', 'Android TV', '嵌入式 mDNS']
+    },
+    {
+      id: 'linear-design-ui',
+      badge: 'BIO-COMPUTING UI',
+      title: 'mRNA 序列优化计算平台',
+      subtitle: '面向生物医药研发人员的 LinearDesign Web 工作台',
+      detail:
+        '基于开源生物计算引擎 LinearDesign 打造的科研计算平台，将高门槛命令行序列优化工具工程化为多端可访问的可视化系统，服务研发人员在线提交任务、跟踪计算状态并归档优化结果。',
+      highlightList: [
+        '采用 API 蓝绿双实例与独立计算 Worker 进程解耦长耗时序列优化任务，保障发版不中断计算',
+        '结合 RustFS 计算产物存储、分角色研发工作台与任务全生命周期追踪，大幅降低科研使用门槛'
+      ],
+      tagList: ['LinearDesign', 'FastAPI', '独立计算 Worker', '蓝绿部署', 'RustFS']
     }
   ],
   principleList: [
