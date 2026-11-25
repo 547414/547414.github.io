@@ -21,8 +21,8 @@ export const PROFILE_DATA: ProfileData = {
   websiteUrl: 'https://crysu.com',
   websiteDisplay: 'crysu.com',
   miniGameUrl: 'https://crysu.com/mini-game/',
-  statusText: '全速前进中 · AI-Native 全栈工程师',
-  roleTitle: '全栈系统架构师 · AI 工作流造物主 · 独立产品开发者',
+  statusText: '全速前进中 · 全栈架构与 AI 工程实践者',
+  roleTitle: '全栈系统架构师 · AI 工具链造物主 · 独立产品开发者',
   heroLead:
     '信奉工业级工程纪律，也热衷把 AI 调教成靠谱的研发搭档——顺手还造了个手机遥控工具，致力于早日实现在海边喝着椰子水点「允许」把需求上线。',
   heroSubLead:
@@ -91,7 +91,7 @@ export const PROFILE_DATA: ProfileData = {
     },
     {
       id: 'ai-native',
-      eyebrow: '02 · AI-NATIVE',
+      eyebrow: '02 · AI 协同工程',
       title: '不止用 AI 写代码，更给 AI 立规矩、造武器',
       summary:
         '把工程规范写进 CLAUDE.md / AGENTS.md 只是起点。为了让人机协同真正可控、趁手，我亲手做了手机远程审批与终端遥控工具 Phone AI Audit，也落地过企业级 AI 工具网关、纯本地离线 AI 知识网盘、Agent Skills 体系及自建 TTS / ASR 语音推理接口。',
