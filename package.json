@@ -1,0 +1,25 @@
+{
+  "name": "crysu-homepage",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Crysu (@547414) 个人主页与开发者名片",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview",
+    "deploy": "bash scripts/deploy-gh-pages.sh"
+  },
+  "dependencies": {
+    "lucide-vue-next": "^0.511.0",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.4",
+    "@vitejs/plugin-vue": "^5.2.3",
+    "tailwindcss": "^4.1.4",
+    "typescript": "~5.8.3",
+    "vite": "^6.3.5",
+    "vue-tsc": "^2.2.8"
+  }
+}
