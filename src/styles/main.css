@@ -1,164 +1,133 @@
 @import "tailwindcss";
 
+/* Apple / macOS Human Interface Guidelines Palette */
 :root {
-  --bg-page: #f4f7f9;
-  --bg-surface: rgba(255, 255, 255, 0.86);
-  --bg-surface-strong: #ffffff;
-  --bg-elevated: rgba(241, 246, 249, 0.9);
-  --border-subtle: rgba(15, 36, 46, 0.1);
-  --border-strong: rgba(8, 145, 178, 0.35);
-  --text-primary: #0a171f;
-  --text-secondary: #395360;
-  --text-muted: #647f8d;
-  --accent-cyan: #0891b2;
-  --accent-cyan-soft: rgba(8, 145, 178, 0.12);
-  --accent-amber: #d97706;
-  --accent-amber-soft: rgba(217, 119, 6, 0.12);
-  --accent-emerald: #059669;
-  --accent-emerald-soft: rgba(5, 150, 105, 0.12);
-  --grid-line: rgba(15, 36, 46, 0.045);
-  --glow-hero: rgba(8, 145, 178, 0.11);
-  --shadow-card: 0 10px 30px -12px rgba(10, 23, 31, 0.08);
+  --mac-bg: #f5f5f7;
+  --mac-surface: #ffffff;
+  --mac-surface-secondary: #fbfbfd;
+  --mac-sidebar: #f5f5f7;
+  --mac-menubar: rgba(251, 251, 253, 0.78);
+  --mac-control-bg: rgba(118, 118, 128, 0.12);
+  --mac-control-active: #ffffff;
+  --mac-hover: rgba(0, 0, 0, 0.04);
+  --mac-border: rgba(0, 0, 0, 0.08);
+  --mac-border-soft: rgba(0, 0, 0, 0.05);
+  --mac-text: #1d1d1f;
+  --mac-text-secondary: #515154;
+  --mac-text-tertiary: #86868b;
+  --mac-blue: #0071e3;
+  --mac-blue-hover: #0077ed;
+  --mac-blue-soft: rgba(0, 113, 227, 0.1);
+  --mac-shadow-card:
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 8px 24px -12px rgba(0, 0, 0, 0.08);
+  --mac-shadow-window:
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    0 24px 60px -24px rgba(0, 0, 0, 0.14);
+  --mac-shadow-segment: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.06);
   color-scheme: light;
 }
 
 html.dark {
-  --bg-page: #040a0d;
-  --bg-surface: rgba(10, 22, 28, 0.72);
-  --bg-surface-strong: #0a161c;
-  --bg-elevated: rgba(14, 30, 38, 0.84);
-  --border-subtle: rgba(140, 220, 235, 0.13);
-  --border-strong: rgba(56, 217, 240, 0.45);
-  --text-primary: #ecf7f4;
-  --text-secondary: rgba(208, 232, 226, 0.76);
-  --text-muted: rgba(162, 198, 192, 0.54);
-  --accent-cyan: #38d9f0;
-  --accent-cyan-soft: rgba(56, 217, 240, 0.13);
-  --accent-amber: #ffb547;
-  --accent-amber-soft: rgba(255, 181, 71, 0.14);
-  --accent-emerald: #34d399;
-  --accent-emerald-soft: rgba(52, 211, 153, 0.13);
-  --grid-line: rgba(56, 217, 240, 0.045);
-  --glow-hero: rgba(56, 217, 240, 0.15);
-  --shadow-card: 0 20px 50px -24px rgba(0, 0, 0, 0.75);
+  --mac-bg: #000000;
+  --mac-surface: #1c1c1e;
+  --mac-surface-secondary: #161618;
+  --mac-sidebar: #141416;
+  --mac-menubar: rgba(22, 22, 24, 0.78);
+  --mac-control-bg: rgba(118, 118, 128, 0.24);
+  --mac-control-active: #3a3a3c;
+  --mac-hover: rgba(255, 255, 255, 0.06);
+  --mac-border: rgba(255, 255, 255, 0.11);
+  --mac-border-soft: rgba(255, 255, 255, 0.07);
+  --mac-text: #f5f5f7;
+  --mac-text-secondary: #a1a1a6;
+  --mac-text-tertiary: #6e6e73;
+  --mac-blue: #2997ff;
+  --mac-blue-hover: #4aa8ff;
+  --mac-blue-soft: rgba(41, 151, 255, 0.14);
+  --mac-shadow-card: 0 10px 30px -18px rgba(0, 0, 0, 0.65);
+  --mac-shadow-window: 0 28px 70px -24px rgba(0, 0, 0, 0.85);
+  --mac-shadow-segment: 0 1px 3px rgba(0, 0, 0, 0.45);
   color-scheme: dark;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    background-color: var(--bg-page);
-    color: var(--text-primary);
+    background-color: var(--mac-bg);
+    color: var(--mac-text);
     font-family:
-      -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
-      "Noto Sans SC", "Segoe UI", sans-serif;
+      -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "PingFang SC",
+      "Hiragino Sans GB", "Helvetica Neue", "Microsoft YaHei", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   body {
     margin: 0;
     min-height: 100vh;
-    background-color: var(--bg-page);
-    color: var(--text-primary);
+    background-color: var(--mac-bg);
+    color: var(--mac-text);
     overflow-x: hidden;
   }
 
   ::selection {
-    background: var(--accent-cyan-soft);
-    color: var(--accent-cyan);
+    background: var(--mac-blue-soft);
+    color: var(--mac-blue);
   }
 }
 
-.font-mono-tech {
-  font-family:
-    "JetBrains Mono", "SFMono-Regular", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono",
-    monospace;
+.font-mono-mac {
+  font-family: "SF Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
-.bg-telemetry-grid {
-  background-image:
-    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
-  background-size: 44px 44px;
+/* macOS 菜单栏磨砂玻璃 */
+.mac-vibrancy {
+  background: var(--mac-menubar);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
 }
 
-.surface-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  box-shadow: var(--shadow-card);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
-.surface-card-hover {
+/* macOS 卡片容器 */
+.mac-card {
+  background: var(--mac-surface);
+  border: 1px solid var(--mac-border-soft);
+  box-shadow: var(--mac-shadow-card);
   transition:
-    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.25s ease,
-    box-shadow 0.25s ease;
+    transform 0.28s cubic-bezier(0.25, 0.1, 0.25, 1),
+    box-shadow 0.28s cubic-bezier(0.25, 0.1, 0.25, 1),
+    border-color 0.25s ease;
 }
 
-.surface-card-hover:hover {
-  transform: translateY(-3px);
-  border-color: var(--border-strong);
+.mac-card-interactive:hover {
+  transform: translateY(-2px);
+  border-color: var(--mac-border);
 }
 
-/* 致敬 crysu.com 夜间高速出口路牌风格 */
-.highway-sign {
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(145deg, #0c7845 0%, #095d36 58%, #074729 100%);
-  border: 2px solid rgba(242, 250, 246, 0.88);
-  box-shadow:
-    inset 0 0 0 3px rgba(7, 71, 41, 0.9),
-    inset 0 0 0 4.5px rgba(242, 250, 246, 0.24),
-    0 20px 44px -18px rgba(5, 36, 22, 0.65);
-  color: #f4fbf8;
-  transition:
-    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.28s ease;
+/* macOS 经典桌面窗口容器 */
+.mac-window {
+  background: var(--mac-surface);
+  border: 1px solid var(--mac-border);
+  box-shadow: var(--mac-shadow-window);
 }
 
-.highway-sign::after {
-  content: "";
-  position: absolute;
-  inset: -40% -20%;
-  background: linear-gradient(
-    115deg,
-    transparent 35%,
-    rgba(255, 255, 255, 0.14) 48%,
-    rgba(255, 255, 255, 0.04) 55%,
-    transparent 65%
-  );
-  transform: translateX(-65%);
-  transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
-  pointer-events: none;
+.mac-traffic-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.16);
 }
 
-.highway-sign:hover {
-  transform: translateY(-4px);
-  box-shadow:
-    inset 0 0 0 3px rgba(7, 71, 41, 0.9),
-    inset 0 0 0 4.5px rgba(242, 250, 246, 0.4),
-    0 24px 52px -16px rgba(11, 109, 63, 0.55);
+/* macOS Segmented Control */
+.mac-segmented {
+  background: var(--mac-control-bg);
+  padding: 3px;
+  border-radius: 10px;
 }
 
-.highway-sign:hover::after {
-  transform: translateX(65%);
-}
-
-@keyframes pulse-dot {
-  0%,
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.45;
-    transform: scale(0.85);
-  }
-}
-
-.animate-pulse-dot {
-  animation: pulse-dot 2.2s ease-in-out infinite;
+.mac-segment-active {
+  background: var(--mac-control-active);
+  box-shadow: var(--mac-shadow-segment);
+  color: var(--mac-text);
 }

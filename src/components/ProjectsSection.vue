@@ -1,18 +1,25 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { ArrowUpRight, ExternalLink, Server, Sparkles } from 'lucide-vue-next'
+import {
+  ArrowUpRight,
+  Cpu,
+  Dna,
+  HardDrive,
+  Kanban,
+  MonitorSmartphone
+} from 'lucide-vue-next'
 import { PROJECT_CATEGORY_LIST } from '@/data/profile'
 import type { EnterpriseTrackItem, ProjectCategoryKey, ProjectItem } from '@/types/profile'
 
 interface ProjectsSectionProps {
   projectList: ProjectItem[]
   enterpriseTrackList: EnterpriseTrackItem[]
-  websiteUrl: string
 }
 
 const props = defineProps<ProjectsSectionProps>()
 
 const activeCategory = ref<ProjectCategoryKey>('all')
+const activeTrackId = ref<string>(props.enterpriseTrackList[0]?.id ?? 'enterprise-drive')
 
 const filteredProjectList = computed<ProjectItem[]>(() => {
   if (activeCategory.value === 'all') {
@@ -22,8 +29,7 @@ const filteredProjectList = computed<ProjectItem[]>(() => {
 })
 
 const featuredProject = computed<ProjectItem | null>(() => {
-  const found = filteredProjectList.value.find((item) => item.featured)
-  return found ?? null
+  return filteredProjectList.value.find((item) => item.featured) ?? null
 })
 
 const regularProjectList = computed<ProjectItem[]>(() => {
@@ -33,105 +39,82 @@ const regularProjectList = computed<ProjectItem[]>(() => {
   return filteredProjectList.value.filter((item) => item.id !== featuredProject.value?.id)
 })
 
-function countByCategory(categoryKey: ProjectCategoryKey): number {
-  if (categoryKey === 'all') {
-    return props.projectList.length
-  }
-  return props.projectList.filter((item) => item.category === categoryKey).length
-}
+const currentTrack = computed<EnterpriseTrackItem | undefined>(() => {
+  return (
+    props.enterpriseTrackList.find((item) => item.id === activeTrackId.value) ??
+    props.enterpriseTrackList[0]
+  )
+})
 </script>
 
 <template>
-  <section id="works" class="py-16 sm:py-24">
-    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
-        <div class="max-w-2xl">
-          <div class="font-mono-tech text-xs font-semibold uppercase tracking-[0.22em] text-[var(--accent-cyan)]">
-            SELECTED WORKS · 代表作品与实战
-          </div>
-          <h2 class="mt-2 text-2xl font-bold tracking-tight text-[var(--text-primary)] sm:text-3xl">
-            每一个卡片，都是跑在真实世界里的代码
+  <section id="works" class="border-t border-[var(--mac-border-soft)] py-24 sm:py-32">
+    <div class="mx-auto max-w-5xl px-6 sm:px-10">
+      <!-- 标题 + macOS Segmented Control -->
+      <div class="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
+        <div class="max-w-xl">
+          <p class="text-[13px] font-medium text-[var(--mac-blue)]">代表作品</p>
+          <h2 class="mt-2.5 text-3xl font-bold tracking-tight text-[var(--mac-text)] sm:text-4xl">
+            跑在真实世界里的代码。
           </h2>
-          <p class="mt-2.5 text-sm leading-relaxed text-[var(--text-secondary)] sm:text-base">
-            涵盖 AI 远程遥控工具、千人级大型生产案例、微信小程序/小游戏与开源底座，点击可直达源码、在线试玩或生产复盘。
-          </p>
         </div>
 
-        <!-- 分类筛选 -->
-        <div class="flex flex-wrap gap-2">
+        <div class="mac-segmented inline-flex w-fit max-w-full items-center gap-0.5 overflow-x-auto">
           <button
             v-for="cat in PROJECT_CATEGORY_LIST"
             :key="cat.key"
             type="button"
-            class="cursor-pointer rounded-full border px-3.5 py-1.5 text-xs font-medium transition-all"
+            class="cursor-pointer whitespace-nowrap rounded-[7px] px-3.5 py-1.5 text-[13px] font-medium transition-all"
             :class="
               activeCategory === cat.key
-                ? 'border-[var(--accent-cyan)] bg-[var(--accent-cyan)] text-[#031318]'
-                : 'border-[var(--border-subtle)] bg-[var(--bg-surface)] text-[var(--text-secondary)] hover:border-[var(--border-strong)] hover:text-[var(--text-primary)]'
+                ? 'mac-segment-active'
+                : 'text-[var(--mac-text-secondary)] hover:text-[var(--mac-text)]'
             "
             @click="activeCategory = cat.key"
           >
             {{ cat.label }}
-            <span class="ml-1 font-mono-tech opacity-75">({{ countByCategory(cat.key) }})</span>
           </button>
         </div>
       </div>
 
-      <!-- 主推特色项目卡片（Phone AI Audit） -->
+      <!-- 头牌特色作品（Phone AI Audit） -->
       <article
         v-if="featuredProject"
-        class="surface-card surface-card-hover relative mt-10 overflow-hidden rounded-2xl border-[var(--border-strong)] p-6 sm:p-8"
+        class="mac-card mac-card-interactive mt-12 rounded-2xl p-8 sm:p-10"
       >
-        <div
-          aria-hidden="true"
-          class="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full blur-[90px]"
-          style="background: var(--glow-hero)"
-        />
-
-        <div class="relative grid gap-6 lg:grid-cols-12 lg:items-center">
+        <div class="grid gap-8 lg:grid-cols-12 lg:items-start">
           <div class="lg:col-span-8">
-            <div class="flex flex-wrap items-center gap-2.5">
-              <span
-                class="inline-flex items-center gap-1.5 rounded-full bg-[var(--accent-amber-soft)] px-3 py-1 font-mono-tech text-xs font-semibold text-[var(--accent-amber)]"
-              >
-                <Sparkles class="h-3.5 w-3.5" />
-                {{ featuredProject.statusBadge }}
-              </span>
-              <span
-                class="rounded-full border border-[var(--border-subtle)] px-2.5 py-1 text-xs text-[var(--text-muted)]"
-              >
-                {{ featuredProject.categoryLabel }}
-              </span>
-            </div>
-
-            <h3 class="mt-4 text-2xl font-bold text-[var(--text-primary)] sm:text-3xl">
+            <p class="text-[12px] font-medium text-[var(--mac-blue)]">
+              {{ featuredProject.categoryLabel }} · {{ featuredProject.statusBadge }}
+            </p>
+            <h3 class="mt-2.5 text-2xl font-bold tracking-tight text-[var(--mac-text)] sm:text-[28px]">
               {{ featuredProject.title }}
             </h3>
-            <p class="mt-1.5 text-sm font-medium text-[var(--accent-cyan)] sm:text-base">
+            <p class="mt-2 text-[15px] text-[var(--mac-text-tertiary)]">
               {{ featuredProject.subtitle }}
             </p>
-            <p class="mt-3 text-sm leading-7 text-[var(--text-secondary)] sm:text-[15px]">
+            <p class="mt-5 text-[15px] leading-[1.85] text-[var(--mac-text-secondary)]">
               {{ featuredProject.summary }}
             </p>
 
-            <ul class="mt-4 space-y-2 text-sm text-[var(--text-secondary)]">
+            <ul class="mt-6 space-y-2.5 text-[14px] leading-relaxed text-[var(--mac-text-secondary)]">
               <li
                 v-for="point in featuredProject.highlightList"
                 :key="point"
-                class="flex items-start gap-2.5"
+                class="flex items-start gap-3"
               >
-                <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent-cyan)]" />
+                <span class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--mac-blue)]" />
                 <span>{{ point }}</span>
               </li>
             </ul>
           </div>
 
-          <div class="flex flex-col justify-between gap-5 lg:col-span-4 lg:items-end">
+          <div class="flex flex-col justify-between gap-6 lg:col-span-4 lg:items-end">
             <div class="flex flex-wrap gap-2 lg:justify-end">
               <span
                 v-for="tag in featuredProject.tagList"
                 :key="tag"
-                class="rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-elevated)] px-2.5 py-1 font-mono-tech text-xs text-[var(--text-secondary)]"
+                class="rounded-full bg-[var(--mac-hover)] px-3 py-1 text-[12px] text-[var(--mac-text-secondary)]"
               >
                 {{ tag }}
               </span>
@@ -144,7 +127,7 @@ function countByCategory(categoryKey: ProjectCategoryKey): number {
                 :href="link.url"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex items-center gap-2 rounded-xl bg-[var(--accent-cyan)] px-5 py-2.5 text-sm font-semibold text-[#031318] transition-all hover:brightness-110"
+                class="inline-flex items-center gap-1.5 rounded-full bg-[var(--mac-blue)] px-5 py-2.5 text-[14px] font-medium text-white transition-colors hover:bg-[var(--mac-blue-hover)]"
               >
                 <span>{{ link.label }}</span>
                 <ArrowUpRight class="h-4 w-4" />
@@ -154,149 +137,156 @@ function countByCategory(categoryKey: ProjectCategoryKey): number {
         </div>
       </article>
 
-      <!-- 常规 6 大作品网格 -->
-      <div class="mt-6 grid gap-5 md:grid-cols-2">
+      <!-- 常规 6 大作品（2 列舒展网格） -->
+      <div class="mt-7 grid gap-6 md:grid-cols-2 md:gap-7">
         <article
           v-for="project in regularProjectList"
           :key="project.id"
-          class="surface-card surface-card-hover flex flex-col justify-between rounded-2xl p-6"
+          class="mac-card mac-card-interactive flex flex-col justify-between rounded-2xl p-8"
         >
           <div>
-            <div class="flex items-center justify-between gap-3">
-              <span class="font-mono-tech text-xs text-[var(--accent-cyan)]">
+            <div class="flex items-center justify-between gap-4">
+              <span class="text-[12px] font-medium text-[var(--mac-text-tertiary)]">
                 {{ project.categoryLabel }}
               </span>
-              <span
-                v-if="project.statusBadge"
-                class="rounded-full border border-[var(--border-subtle)] bg-[var(--bg-elevated)] px-2.5 py-0.5 font-mono-tech text-[11px] text-[var(--text-secondary)]"
-              >
-                {{ project.statusBadge }}
-              </span>
+              <div class="flex items-center gap-3">
+                <a
+                  v-for="link in project.linkList"
+                  :key="link.url"
+                  :href="link.url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-0.5 text-[13px] font-medium text-[var(--mac-blue)] hover:underline"
+                >
+                  <span>{{ link.label }}</span>
+                  <ArrowUpRight class="h-3.5 w-3.5" />
+                </a>
+              </div>
             </div>
 
-            <h3 class="mt-3 text-xl font-bold text-[var(--text-primary)]">
+            <h3 class="mt-4 text-[20px] font-semibold tracking-tight text-[var(--mac-text)]">
               {{ project.title }}
             </h3>
-            <p class="mt-1 text-xs font-medium text-[var(--text-muted)] sm:text-sm">
+            <p class="mt-1.5 text-[13px] text-[var(--mac-text-tertiary)]">
               {{ project.subtitle }}
             </p>
-            <p class="mt-3 text-sm leading-7 text-[var(--text-secondary)]">
+            <p class="mt-4 text-[14px] leading-[1.85] text-[var(--mac-text-secondary)]">
               {{ project.summary }}
             </p>
-
-            <ul class="mt-4 space-y-1.5 text-xs leading-6 text-[var(--text-secondary)] sm:text-[13px]">
-              <li
-                v-for="point in project.highlightList"
-                :key="point"
-                class="flex items-start gap-2"
-              >
-                <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent-emerald)]" />
-                <span>{{ point }}</span>
-              </li>
-            </ul>
           </div>
 
-          <div class="mt-6 border-t border-[var(--border-subtle)] pt-4">
-            <div class="flex flex-wrap gap-1.5">
-              <span
-                v-for="tag in project.tagList"
-                :key="tag"
-                class="rounded-md border border-[var(--border-subtle)] bg-[var(--bg-elevated)] px-2 py-0.5 font-mono-tech text-[11px] text-[var(--text-muted)]"
-              >
-                {{ tag }}
-              </span>
-            </div>
-
-            <div class="mt-4 flex flex-wrap items-center gap-3">
-              <a
-                v-for="link in project.linkList"
-                :key="link.url"
-                :href="link.url"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all"
-                :class="
-                  link.primary
-                    ? 'border border-[var(--border-strong)] bg-[var(--accent-cyan-soft)] text-[var(--accent-cyan)] hover:bg-[var(--accent-cyan)] hover:text-[#031318]'
-                    : 'border border-[var(--border-subtle)] text-[var(--text-secondary)] hover:border-[var(--border-strong)] hover:text-[var(--text-primary)]'
-                "
-              >
-                <span>{{ link.label }}</span>
-                <ExternalLink class="h-3.5 w-3.5" />
-              </a>
-            </div>
+          <div class="mt-7 flex flex-wrap gap-2">
+            <span
+              v-for="tag in project.tagList.slice(0, 4)"
+              :key="tag"
+              class="rounded-full bg-[var(--mac-hover)] px-3 py-1 text-[12px] text-[var(--mac-text-tertiary)]"
+            >
+              {{ tag }}
+            </span>
           </div>
         </article>
       </div>
 
-      <!-- 脱敏企业级工程沉淀概览 -->
-      <div class="surface-card mt-10 rounded-2xl p-6 sm:p-8">
-        <div class="flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
-          <div>
-            <div class="flex items-center gap-2.5">
-              <Server class="h-4 w-4 text-[var(--accent-cyan)]" />
-              <h3 class="text-lg font-bold text-[var(--text-primary)]">
-                更多生产级工程沉淀（脱敏概览）
-              </h3>
-            </div>
-            <p class="mt-1.5 text-xs leading-relaxed text-[var(--text-secondary)] sm:text-sm">
-              以下为长期实战中从 0 到 1 主导架构与落地的企业级系统，已按公开边界脱敏，仅呈现工程架构与核心能力。
-            </p>
-          </div>
-          <a
-            :href="websiteUrl"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex shrink-0 items-center gap-1 font-mono-tech text-xs text-[var(--accent-cyan)] hover:underline"
-          >
-            <span>更多公开项目见 crysu.com</span>
-            <ArrowUpRight class="h-3.5 w-3.5" />
-          </a>
+      <!-- 生产级工程沉淀（仿 macOS「系统设置」左右分栏窗口） -->
+      <div class="mt-24 sm:mt-28">
+        <div class="max-w-2xl">
+          <p class="text-[13px] font-medium text-[var(--mac-blue)]">生产级工程沉淀</p>
+          <h3 class="mt-2.5 text-2xl font-bold tracking-tight text-[var(--mac-text)] sm:text-3xl">
+            更多从 0 到 1 落地的系统架构（脱敏概览）
+          </h3>
+          <p class="mt-3 text-[15px] leading-relaxed text-[var(--mac-text-secondary)]">
+            在左侧切换不同系统，查看各项目的核心定位、关键技术细节与架构选型。
+          </p>
         </div>
 
-        <div class="mt-6 grid gap-4 md:grid-cols-2">
-          <article
-            v-for="track in enterpriseTrackList"
-            :key="track.id"
-            class="flex flex-col justify-between rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-5 transition-colors hover:border-[var(--border-strong)]"
-            :class="track.wide ? 'md:col-span-2' : ''"
+        <div class="mac-window mt-10 overflow-hidden rounded-2xl">
+          <!-- macOS 窗口顶栏 -->
+          <div
+            class="relative flex h-11 items-center border-b border-[var(--mac-border-soft)] bg-[var(--mac-surface-secondary)] px-4"
           >
-            <div>
-              <div class="font-mono-tech text-[11px] font-semibold tracking-[0.18em] text-[var(--accent-cyan)]">
-                {{ track.badge }}
-              </div>
-              <h4 class="mt-2 text-base font-bold text-[var(--text-primary)] sm:text-lg">
-                {{ track.title }}
-              </h4>
-              <p class="mt-1 text-xs font-medium text-[var(--text-muted)] sm:text-[13px]">
-                {{ track.subtitle }}
-              </p>
-              <p class="mt-3 text-xs leading-6 text-[var(--text-secondary)] sm:text-sm sm:leading-7">
-                {{ track.detail }}
-              </p>
+            <div class="flex items-center gap-2">
+              <span class="mac-traffic-dot bg-[#ff5f57]" />
+              <span class="mac-traffic-dot bg-[#febc2e]" />
+              <span class="mac-traffic-dot bg-[#28c840]" />
+            </div>
+            <span
+              class="pointer-events-none absolute left-1/2 -translate-x-1/2 text-[12px] font-medium text-[var(--mac-text-tertiary)]"
+            >
+              工程档案 · 系统概览
+            </span>
+          </div>
 
-              <ul class="mt-3.5 space-y-1.5 text-xs leading-6 text-[var(--text-secondary)]">
-                <li
-                  v-for="point in track.highlightList"
-                  :key="point"
-                  class="flex items-start gap-2"
+          <!-- 窗口主体：左侧 macOS Sidebar + 右侧宽敞详情面板 -->
+          <div class="grid md:grid-cols-12">
+            <!-- 左侧边栏（移动端为横向切换列表） -->
+            <aside
+              class="border-b border-[var(--mac-border-soft)] bg-[var(--mac-sidebar)] p-3 md:col-span-4 md:border-b-0 md:border-r md:p-4"
+            >
+              <div class="flex gap-1.5 overflow-x-auto md:flex-col md:gap-1">
+                <button
+                  v-for="track in enterpriseTrackList"
+                  :key="track.id"
+                  type="button"
+                  class="flex shrink-0 cursor-pointer items-center gap-3 rounded-xl px-3.5 py-2.5 text-left text-[13px] font-medium transition-colors md:w-full"
+                  :class="
+                    activeTrackId === track.id
+                      ? 'bg-[var(--mac-blue)] text-white'
+                      : 'text-[var(--mac-text-secondary)] hover:bg-[var(--mac-hover)] hover:text-[var(--mac-text)]'
+                  "
+                  @click="activeTrackId = track.id"
                 >
-                  <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent-cyan)]" />
-                  <span>{{ point }}</span>
-                </li>
-              </ul>
-            </div>
+                  <HardDrive v-if="track.id === 'enterprise-drive'" class="h-4 w-4 shrink-0" />
+                  <Cpu v-else-if="track.id === 'agent-gate'" class="h-4 w-4 shrink-0" />
+                  <Kanban v-else-if="track.id === 'work-quantification'" class="h-4 w-4 shrink-0" />
+                  <MonitorSmartphone v-else-if="track.id === 'screen-casting'" class="h-4 w-4 shrink-0" />
+                  <Dna v-else class="h-4 w-4 shrink-0" />
+                  <span class="truncate">{{ track.title }}</span>
+                </button>
+              </div>
+            </aside>
 
-            <div class="mt-5 flex flex-wrap gap-1.5 border-t border-[var(--border-subtle)] pt-3.5">
-              <span
-                v-for="tag in track.tagList"
-                :key="tag"
-                class="rounded-md bg-[var(--accent-cyan-soft)] px-2.5 py-0.5 font-mono-tech text-[11px] text-[var(--accent-cyan)]"
-              >
-                {{ tag }}
-              </span>
+            <!-- 右侧宽敞详情面板 -->
+            <div v-if="currentTrack" class="p-8 sm:p-10 md:col-span-8">
+              <p class="font-mono-mac text-[11px] font-medium uppercase tracking-[0.14em] text-[var(--mac-text-tertiary)]">
+                {{ currentTrack.badge }}
+              </p>
+
+              <h4 class="mt-2.5 text-2xl font-bold tracking-tight text-[var(--mac-text)]">
+                {{ currentTrack.title }}
+              </h4>
+              <p class="mt-2 text-[14px] text-[var(--mac-text-tertiary)]">
+                {{ currentTrack.subtitle }}
+              </p>
+
+              <p class="mt-6 text-[15px] leading-[1.85] text-[var(--mac-text-secondary)]">
+                {{ currentTrack.detail }}
+              </p>
+
+              <div class="mt-7 border-t border-[var(--mac-border-soft)] pt-6">
+                <p class="text-[12px] font-semibold text-[var(--mac-text-tertiary)]">核心工程亮点</p>
+                <ul class="mt-3.5 space-y-3 text-[14px] leading-7 text-[var(--mac-text-secondary)]">
+                  <li
+                    v-for="point in currentTrack.highlightList"
+                    :key="point"
+                    class="flex items-start gap-3"
+                  >
+                    <span class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--mac-blue)]" />
+                    <span>{{ point }}</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="mt-8 flex flex-wrap gap-2">
+                <span
+                  v-for="tag in currentTrack.tagList"
+                  :key="tag"
+                  class="rounded-full bg-[var(--mac-hover)] px-3.5 py-1 text-[12px] font-medium text-[var(--mac-text-secondary)]"
+                >
+                  {{ tag }}
+                </span>
+              </div>
             </div>
-          </article>
+          </div>
         </div>
       </div>
     </div>

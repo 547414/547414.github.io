@@ -6,11 +6,11 @@ export interface CategoryFilterOption {
 }
 
 export const PROJECT_CATEGORY_LIST: CategoryFilterOption[] = [
-  { key: 'all', label: '全部作品' },
-  { key: 'ai-tools', label: 'AI 与极客工具' },
-  { key: 'indie-product', label: '独立产品与小游戏' },
-  { key: 'production', label: '大型生产实践' },
-  { key: 'open-source', label: '开源工程底座' }
+  { key: 'all', label: '全部' },
+  { key: 'ai-tools', label: 'AI 工具' },
+  { key: 'indie-product', label: '独立产品' },
+  { key: 'production', label: '生产实践' },
+  { key: 'open-source', label: '开源底座' }
 ]
 
 export const PROFILE_DATA: ProfileData = {
@@ -30,8 +30,8 @@ export const PROFILE_DATA: ProfileData = {
   motto: '全速前进。时代在加速，我们从不减速。',
   navItemList: [
     { label: '关于我', href: '#about' },
-    { label: '技术版图', href: '#stack' },
     { label: '代表作品', href: '#works' },
+    { label: '技术版图', href: '#stack' },
     { label: '工程信条', href: '#principles' },
     { label: '联系', href: '#contact' }
   ],

@@ -10,9 +10,9 @@ import ProjectsSection from '@/components/ProjectsSection.vue'
 import TechMatrix from '@/components/TechMatrix.vue'
 import { PROFILE_DATA } from '@/data/profile'
 
-const THEME_STORAGE_KEY = 'crysu-homepage-theme'
+const THEME_STORAGE_KEY = 'crysu-macos-theme'
 
-const isDark = ref<boolean>(true)
+const isDark = ref<boolean>(false)
 const emailCopied = ref<boolean>(false)
 const toastMessage = ref<string>('')
 let copyTimer: number | undefined
@@ -22,7 +22,7 @@ function applyTheme(dark: boolean): void {
   document.documentElement.classList.toggle('dark', dark)
   const themeMeta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')
   if (themeMeta) {
-    themeMeta.content = dark ? '#040a0d' : '#f4f7f9'
+    themeMeta.content = dark ? '#000000' : '#f5f5f7'
   }
 }
 
@@ -78,22 +78,21 @@ function fallbackCopy(text: string): void {
 onMounted(() => {
   try {
     const saved = window.localStorage.getItem(THEME_STORAGE_KEY)
-    if (saved === 'light') {
-      applyTheme(false)
+    if (saved === 'dark') {
+      applyTheme(true)
       return
     }
   } catch {
-    // 默认深色
+    // 默认浅色 macOS 外观
   }
-  applyTheme(true)
+  applyTheme(false)
 })
 </script>
 
 <template>
-  <div class="min-h-screen bg-[var(--bg-page)] text-[var(--text-primary)]">
+  <div class="min-h-screen bg-[var(--mac-bg)] text-[var(--mac-text)]">
     <NavBar
       :brand-name="PROFILE_DATA.name"
-      :handle="PROFILE_DATA.handle"
       :website-url="PROFILE_DATA.websiteUrl"
       :website-display="PROFILE_DATA.websiteDisplay"
       :nav-item-list="PROFILE_DATA.navItemList"
@@ -108,12 +107,11 @@ onMounted(() => {
         @copy-email="handleCopyEmail"
       />
       <AboutBento :profile="PROFILE_DATA" />
-      <TechMatrix :tech-group-list="PROFILE_DATA.techGroupList" />
       <ProjectsSection
         :project-list="PROFILE_DATA.projectList"
         :enterprise-track-list="PROFILE_DATA.enterpriseTrackList"
-        :website-url="PROFILE_DATA.websiteUrl"
       />
+      <TechMatrix :tech-group-list="PROFILE_DATA.techGroupList" />
       <PrinciplesSection :principle-list="PROFILE_DATA.principleList" />
     </main>
 
@@ -134,10 +132,10 @@ onMounted(() => {
       <div
         v-if="toastMessage"
         role="status"
-        class="fixed bottom-6 left-1/2 z-50 inline-flex -translate-x-1/2 items-center gap-2 rounded-full border border-[var(--border-strong)] bg-[var(--bg-surface-strong)] px-4 py-2 text-xs font-medium text-[var(--text-primary)] shadow-xl"
+        class="mac-vibrancy fixed bottom-7 left-1/2 z-50 inline-flex -translate-x-1/2 items-center gap-2 rounded-full border border-[var(--mac-border)] px-4 py-2 text-[13px] font-medium text-[var(--mac-text)] shadow-lg"
       >
-        <Check class="h-3.5 w-3.5 text-[var(--accent-emerald)]" />
-        <span class="font-mono-tech">{{ toastMessage }}</span>
+        <Check class="h-3.5 w-3.5 text-[var(--mac-blue)]" />
+        <span>{{ toastMessage }}</span>
       </div>
     </Transition>
   </div>
